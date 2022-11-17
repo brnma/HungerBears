@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.navigation.fragment.findNavController
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,7 +36,15 @@ class BufferFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_buffer, container, false)
+        val view = inflater.inflate(R.layout.fragment_buffer, container, false)
+
+        // Start button section
+        val start: Button = view.findViewById(R.id.startButton2)
+        start.setOnClickListener() {
+            findNavController().navigate(R.id.action_bufferFragment_to_selectionFragment)
+        }
+
+        return view;
     }
 
     companion object {
