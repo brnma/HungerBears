@@ -1,9 +1,11 @@
 package com.example.hungerbears
 
+import android.animation.Animator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewPropertyAnimator
 import android.view.animation.AccelerateInterpolator
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -23,12 +25,19 @@ class SelectionFragment : Fragment() {
     private var dummyList = ArrayList<Restaurant>()
 
 
+    // for animations
+    private lateinit var animNoSpin: ViewPropertyAnimator
+    private lateinit var animRedoSpin: ViewPropertyAnimator
+    private lateinit var animYesSpin: ViewPropertyAnimator
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSelectionBinding.inflate(inflater, container, false)
 
+        initAnimations()
         val chipotle = Restaurant()
         chipotle.setItem("Chipotle", R.drawable.chipotle, "10.1 Miles Away", 2.69f)
         val mcdonalds = Restaurant()
@@ -55,20 +64,12 @@ class SelectionFragment : Fragment() {
                 .build()
             manager.setSwipeAnimationSetting(setting)
             binding.cardStackView.swipe()
-            binding.yesButton.animate().apply {
-                duration = 1000
-                rotationXBy(360f)
-            }.start()
         }
 
         binding.redoButton.setOnClickListener{
             binding.cardStackView.rewind()
 
-            binding.redoButton.animate().apply {
-                duration = 1000
-                rotationBy(-360f)
 
-            }
         }
 
         binding.noButton.setOnClickListener {
@@ -79,13 +80,65 @@ class SelectionFragment : Fragment() {
                 .build()
             manager.setSwipeAnimationSetting(setting)
             binding.cardStackView.swipe()
-            binding.noButton.animate().apply {
-                duration = 1000
-                rotationXBy(360f)
-            }.start()
         }
 
         return binding.root
+    }
+
+    private fun initAnimations() {
+        // for animations
+        animNoSpin = binding.noButton.animate().apply {
+            duration = 1000
+            rotationXBy(360f)}
+        animNoSpin.setListener(object : Animator.AnimatorListener {
+            override fun onAnimationRepeat(animation: Animator?) {
+            }
+            override fun onAnimationCancel(animation: Animator?) {
+            }
+            override fun onAnimationStart(animation: Animator?) {}
+
+            override fun onAnimationEnd(animation: Animator?) {
+                binding.noButton.rotationX = 0f
+                binding.redoButton.rotation = 0f
+                binding.yesButton.rotationX = 0f
+            }
+        })
+
+
+        animYesSpin = binding.yesButton.animate().apply {
+            duration = 1000
+            rotationXBy(360f)}
+
+        animYesSpin.setListener(object : Animator.AnimatorListener {
+            override fun onAnimationRepeat(animation: Animator?) {
+            }
+            override fun onAnimationCancel(animation: Animator?) {
+            }
+            override fun onAnimationStart(animation: Animator?) {}
+
+            override fun onAnimationEnd(animation: Animator?) {
+                binding.noButton.rotationX = 0f
+                binding.redoButton.rotation = 0f
+                binding.yesButton.rotationX = 0f
+            }
+        })
+
+        animRedoSpin =binding.redoButton.animate().apply {
+            duration = 1000
+            rotationBy(-360f) }
+        animRedoSpin.setListener(object : Animator.AnimatorListener {
+            override fun onAnimationRepeat(animation: Animator?) {
+            }
+            override fun onAnimationCancel(animation: Animator?) {
+            }
+            override fun onAnimationStart(animation: Animator?) {}
+
+            override fun onAnimationEnd(animation: Animator?) {
+                binding.noButton.rotationX = 0f
+                binding.redoButton.rotation = 0f
+                binding.yesButton.rotationX = 0f
+            }
+        })
     }
 
     private fun init() {
@@ -110,6 +163,10 @@ class SelectionFragment : Fragment() {
             }
 
             override fun onCardRewound() {
+                binding.redoButton.animate().apply {
+                    duration = 1000
+                    rotationBy(-360f)
+                }.start()
             }
 
             override fun onCardCanceled() {
