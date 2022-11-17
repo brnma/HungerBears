@@ -1,59 +1,191 @@
 package com.example.hungerbears
 
+import android.animation.Animator
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewPropertyAnimator
+import android.view.animation.AccelerateInterpolator
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DefaultItemAnimator
+import com.example.hungerbears.databinding.FragmentSelectionBinding
+import com.yuyakaido.android.cardstackview.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SelectionFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SelectionFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding:FragmentSelectionBinding? = null
+    private val binding get() = _binding!!
+
+    // private val viewModel: SharedViewModel by activityViewModels()
+
+    private lateinit var manager: CardStackLayoutManager
+
+    private var dummyList = ArrayList<Restaurant>()
+
+
+    // for animations
+    private lateinit var animNoSpin: ViewPropertyAnimator
+    private lateinit var animRedoSpin: ViewPropertyAnimator
+    private lateinit var animYesSpin: ViewPropertyAnimator
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_selection, container, false)
+    ): View {
+        _binding = FragmentSelectionBinding.inflate(inflater, container, false)
+
+        initAnimations()
+        val chipotle = Restaurant()
+        chipotle.setItem("Chipotle", R.drawable.chipotle, "10.1 Miles Away", 2.69f)
+        val mcdonalds = Restaurant()
+        mcdonalds.setItem("Mcdonalds", R.drawable.mcdonalds, "43.2 Miles Away", 1.2f)
+        val jollibee = Restaurant()
+        jollibee.setItem("Jollibee", R.drawable.jollibee, "1.5 Miles Away", 4.20f)
+
+        dummyList.add(chipotle)
+        dummyList.add(mcdonalds)
+        dummyList.add(jollibee)
+        dummyList.add(chipotle)
+        dummyList.add(mcdonalds)
+        dummyList.add(jollibee)
+        init()
+        binding.cardStackView.layoutManager = manager
+        binding.cardStackView.itemAnimator = DefaultItemAnimator()
+        binding.cardStackView.adapter = CardStackAdapter(requireContext(), dummyList,)
+
+        binding.yesButton.setOnClickListener {
+            val setting = SwipeAnimationSetting.Builder()
+                .setDirection(Direction.Right)
+                .setDuration(Duration.Normal.duration)
+                .setInterpolator(AccelerateInterpolator())
+                .build()
+            manager.setSwipeAnimationSetting(setting)
+            binding.cardStackView.swipe()
+        }
+
+        binding.redoButton.setOnClickListener{
+            binding.cardStackView.rewind()
+
+
+        }
+
+        binding.noButton.setOnClickListener {
+            val setting = SwipeAnimationSetting.Builder()
+                .setDirection(Direction.Left)
+                .setDuration(Duration.Normal.duration)
+                .setInterpolator(AccelerateInterpolator())
+                .build()
+            manager.setSwipeAnimationSetting(setting)
+            binding.cardStackView.swipe()
+        }
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SelectionFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SelectionFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    private fun initAnimations() {
+        // for animations
+        animNoSpin = binding.noButton.animate().apply {
+            duration = 1000
+            rotationXBy(360f)}
+        animNoSpin.setListener(object : Animator.AnimatorListener {
+            override fun onAnimationRepeat(animation: Animator?) {
+            }
+            override fun onAnimationCancel(animation: Animator?) {
+            }
+            override fun onAnimationStart(animation: Animator?) {}
+
+            override fun onAnimationEnd(animation: Animator?) {
+                binding.noButton.rotationX = 0f
+                binding.redoButton.rotation = 0f
+                binding.yesButton.rotationX = 0f
+            }
+        })
+
+
+        animYesSpin = binding.yesButton.animate().apply {
+            duration = 1000
+            rotationXBy(360f)}
+
+        animYesSpin.setListener(object : Animator.AnimatorListener {
+            override fun onAnimationRepeat(animation: Animator?) {
+            }
+            override fun onAnimationCancel(animation: Animator?) {
+            }
+            override fun onAnimationStart(animation: Animator?) {}
+
+            override fun onAnimationEnd(animation: Animator?) {
+                binding.noButton.rotationX = 0f
+                binding.redoButton.rotation = 0f
+                binding.yesButton.rotationX = 0f
+            }
+        })
+
+        animRedoSpin =binding.redoButton.animate().apply {
+            duration = 1000
+            rotationBy(-360f) }
+        animRedoSpin.setListener(object : Animator.AnimatorListener {
+            override fun onAnimationRepeat(animation: Animator?) {
+            }
+            override fun onAnimationCancel(animation: Animator?) {
+            }
+            override fun onAnimationStart(animation: Animator?) {}
+
+            override fun onAnimationEnd(animation: Animator?) {
+                binding.noButton.rotationX = 0f
+                binding.redoButton.rotation = 0f
+                binding.yesButton.rotationX = 0f
+            }
+        })
+    }
+
+    private fun init() {
+        manager = CardStackLayoutManager(activity as MainActivity, object: CardStackListener{
+            override fun onCardDragging(direction: Direction?, ratio: Float) {
+            }
+
+            override fun onCardSwiped(direction: Direction?) {
+                if (direction == Direction.Left) {
+                    binding.noButton.animate().apply {
+                        duration = 1000
+                        rotationXBy(360f)
+                    }.start()
+                }
+
+                else if (direction == Direction.Right) {
+                    binding.yesButton.animate().apply {
+                        duration = 1000
+                        rotationXBy(360f)
+                    }.start()
                 }
             }
+
+            override fun onCardRewound() {
+                binding.redoButton.animate().apply {
+                    duration = 1000
+                    rotationBy(-360f)
+                }.start()
+            }
+
+            override fun onCardCanceled() {
+            }
+
+            override fun onCardAppeared(view: View?, position: Int) {
+            }
+
+            override fun onCardDisappeared(view: View?, position: Int) {
+            }
+
+        })
+        manager.setSwipeableMethod(SwipeableMethod.AutomaticAndManual)
+        manager.setVisibleCount(3)
+        manager.setTranslationInterval(0.6f)
+        manager.setScaleInterval(0.8f)
+        manager.setMaxDegree(20.0f)
+        manager.setDirections(Direction.FREEDOM)
     }
+
+
 }

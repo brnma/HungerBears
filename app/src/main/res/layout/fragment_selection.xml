@@ -1,14 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SelectionFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.yuyakaido.android.cardstackview.CardStackView
+        android:id="@+id/card_stack_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        tools:listitem="@layout/card_view"/>
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/no_button"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/x_image"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"/>
+
+        <ImageButton
+            android:id="@+id/redo_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/circle_button"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"/>
+
+        <ImageButton
+            android:id="@+id/yes_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/check"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"/>
+
+<!--        <com.like.LikeButton-->
+<!--            android:id="@+id/no_button"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="10dp"-->
+<!--            app:icon_size="20dp"-->
+<!--            app:like_drawable="@drawable/x_on"-->
+<!--            app:unlike_drawable="@drawable/x_off"-->
+<!--            app:anim_scale_factor="4.5"/>-->
+<!--        -->
+
+<!--        <com.like.LikeButton-->
+<!--            android:id="@+id/refresh_button"-->
+<!--            android:layout_width="60dp"-->
+<!--            android:layout_height="60dp"-->
+<!--            android:layout_marginBottom="10dp"-->
+<!--            app:like_drawable="@drawable/refresh"-->
+<!--            app:unlike_drawable="@drawable/refresh"-->
+<!--            app:anim_scale_factor="4.5"/>-->
+
+<!--        <com.like.LikeButton-->
+<!--            android:id="@+id/heart_button"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="10dp"-->
+<!--            app:icon_size="20dp"-->
+<!--            app:icon_type="star"-->
+<!--            app:anim_scale_factor="4.5"/>-->
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
