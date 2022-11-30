@@ -51,34 +51,6 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"/>
 
-<!--        <com.like.LikeButton-->
-<!--            android:id="@+id/no_button"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginBottom="10dp"-->
-<!--            app:icon_size="20dp"-->
-<!--            app:like_drawable="@drawable/x_on"-->
-<!--            app:unlike_drawable="@drawable/x_off"-->
-<!--            app:anim_scale_factor="4.5"/>-->
-<!--        -->
-
-<!--        <com.like.LikeButton-->
-<!--            android:id="@+id/refresh_button"-->
-<!--            android:layout_width="60dp"-->
-<!--            android:layout_height="60dp"-->
-<!--            android:layout_marginBottom="10dp"-->
-<!--            app:like_drawable="@drawable/refresh"-->
-<!--            app:unlike_drawable="@drawable/refresh"-->
-<!--            app:anim_scale_factor="4.5"/>-->
-
-<!--        <com.like.LikeButton-->
-<!--            android:id="@+id/heart_button"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginBottom="10dp"-->
-<!--            app:icon_size="20dp"-->
-<!--            app:icon_type="star"-->
-<!--            app:anim_scale_factor="4.5"/>-->
 
     </LinearLayout>
 
