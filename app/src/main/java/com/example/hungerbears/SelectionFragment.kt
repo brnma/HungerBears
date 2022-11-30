@@ -171,6 +171,10 @@ class SelectionFragment : Fragment() {
                         rotationBy(-360f)
                     }.start()
                 }
+
+                if (++counter >= manager.itemCount) {
+                    findNavController().navigate(R.id.action_selectionFragment_to_loadingFragment)
+                }
             }
 
             override fun onCardRewound() {
@@ -183,9 +187,6 @@ class SelectionFragment : Fragment() {
             }
 
             override fun onCardDisappeared(view: View?, position: Int) {
-                if (++counter >= manager.itemCount) {
-                    findNavController().navigate(R.id.action_selectionFragment_to_loadingFragment)
-                }
             }
 
 
