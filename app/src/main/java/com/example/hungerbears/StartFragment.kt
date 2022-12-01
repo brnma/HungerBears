@@ -23,29 +23,40 @@ class StartFragment : Fragment() {
         _binding = FragmentStartBinding.inflate(inflater, container, false)
 
         binding.startButton.setOnClickListener() {
+            // call google maps api to get restaurants
+//            GoogleMapsService(this.requireContext()).getRestaurants()
+            //navigate to buffer screen
             findNavController().navigate(R.id.action_startFragment_to_bufferFragment)
         }
+
         binding.minusButton1.setOnClickListener() {
             if (numberOfUsers > 1) {
                 numberOfUsers--
                 binding.numUsersVal.text = numberOfUsers.toString()
             }
         }
+
         binding.plusButton1.setOnClickListener() {
             numberOfUsers++
             binding.numUsersVal.text = numberOfUsers.toString()
         }
+
         binding.minusButton2.setOnClickListener() {
             if (numberOfRestaurants > 1) {
                 numberOfRestaurants--
                 binding.numRestaurantsVal.text = numberOfRestaurants.toString()
             }
         }
+
         binding.plusButton2.setOnClickListener() {
-            numberOfRestaurants++
-            binding.numRestaurantsVal.text = numberOfRestaurants.toString()
+            if (numberOfRestaurants < 20) {
+                numberOfRestaurants++
+                binding.numRestaurantsVal.text = numberOfRestaurants.toString()
+            }
         }
 
+        //TODO: store "number of" inputs in ViewModel
+        //TODO: store radius in ViewModel
 
         return binding.root
     }
