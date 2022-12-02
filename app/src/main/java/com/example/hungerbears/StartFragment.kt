@@ -60,8 +60,8 @@ class StartFragment : Fragment() {
         binding.startButton.setOnClickListener() {
             viewModel.setNumRestaurants(numberOfRestaurants)
             viewModel.setNumUsers(numberOfUsers)
-            viewModel.setRadius(binding.searchDistanceNum.text.toString())
-
+            viewModel.setRadius((binding.searchDistanceNum.text.toString().toFloat() * 1609.34).toString())
+            println(viewModel.getRadius())
             // call google maps api to get restaurants
 //            GoogleMapsService(this.requireContext()).getRestaurants()
             getRestaurants()
@@ -142,11 +142,11 @@ class StartFragment : Fragment() {
 
                     val restaurantObj = Restaurant()
 
-                    val userLocation: Location = Location("User Location")
+                    val userLocation = Location("User Location")
                     userLocation.longitude = viewModel.getUserLng()
                     userLocation.latitude = viewModel.getUserLat()
 
-                    val restLocation: Location = Location ("Restaurant Location")
+                    val restLocation = Location ("Restaurant Location")
                     restLocation.longitude = lng
                     restLocation.latitude = lat
 
