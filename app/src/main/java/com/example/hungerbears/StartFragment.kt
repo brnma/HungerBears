@@ -32,6 +32,8 @@ class StartFragment : Fragment() {
         _binding = FragmentStartBinding.inflate(inflater, container, false)
 
         binding.startButton.setOnClickListener() {
+            viewModel.setNumRestaurants(numberOfRestaurants)
+
             // call google maps api to get restaurants
 //            GoogleMapsService(this.requireContext()).getRestaurants()
             getRestaurants()
@@ -89,7 +91,7 @@ class StartFragment : Fragment() {
             Request.Method.GET, url, null,
             { res ->
                 val results: JSONArray = res.getJSONArray("results")
-                for (i in 0..results.length() - 1) {
+                for (i in 0..viewModel.getNumRestaurants() - 1) {
                     val restaurant: JSONObject = results.getJSONObject(i)
                     val name: String = restaurant.getString("name")
                     val rating: Double = restaurant.getDouble("rating")

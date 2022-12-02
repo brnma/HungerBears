@@ -20,4 +20,12 @@ class SharedViewModel: ViewModel() {
     fun addRestaurant(item: Restaurant){
         restaurantList.add(item)
     }
+
+    fun getNumRestaurants(): Int{
+        return numUsers
+    }
+
+    fun setNumRestaurants(num: Int){
+        numUsers = num
+    }
 }
