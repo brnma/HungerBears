@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.hungerbears.databinding.CardViewBinding
 
 class CardStackAdapter(val context: Context, val list: ArrayList<Restaurant>): RecyclerView.Adapter<CardStackAdapter.CardStackViewHolder>() {
@@ -21,7 +22,9 @@ class CardStackAdapter(val context: Context, val list: ArrayList<Restaurant>): R
         holder.binding.itemDistance.text = list[position].getDistanceAway()
         holder.binding.itemRating.rating = list[position].getRating()
 
-        holder.binding.itemImage.setImageResource(list[position].getImage())
+        val imageURL = list[position].getImage()
+//        holder.binding.itemImage.setImageResource(list[position].getImage())
+        Glide.with(context).load(imageURL).fitCenter().into(holder.binding.itemImage)
     }
 
     override fun getItemCount(): Int {

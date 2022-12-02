@@ -40,7 +40,7 @@ class GoogleMapsService(val context: Context) {
                     val photoUrl: String =
                         "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoRef}&key=${API_KEY}"
                     //TODO: modify Restaurant class fields? (address OR lat/lng, photoUrl ...)
-                    val restaurantObj = Restaurant().setItem(name, 0, "", rating.toFloat())
+                    val restaurantObj = Restaurant().setItem(name, photoUrl, "", rating.toFloat())
                     //TODO: add restaurantObj to list in ViewModel
                 }
 

@@ -106,7 +106,7 @@ class StartFragment : Fragment() {
                     //TODO: modify Restaurant class fields? (address OR lat/lng, photoUrl ...)
 
                     val restaurantObj: Restaurant = Restaurant()
-                    restaurantObj.setItem(name, R.drawable.chipotle, "123", rating.toFloat())
+                    restaurantObj.setItem(name, photoUrl, "123", rating.toFloat())
                     //TODO: add restaurantObj to list in ViewModel
                     viewModel.addRestaurant(restaurantObj)
                 }
