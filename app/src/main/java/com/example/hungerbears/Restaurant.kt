@@ -2,20 +2,20 @@ package com.example.hungerbears
 
 
 class Restaurant {
-    private var image = 0
+    private var image = ""
     private var distanceAway: String = ""
     private var name: String = ""
     private var rating: Float = 0f
 
 
-    fun setItem(name: String, image: Int, dist: String, rating: Float){
+    fun setItem(name: String, image: String, dist: Float, rating: Float){
         this.name = name
         this.image = image
-        distanceAway = dist
+        distanceAway = String.format("%.2f", dist) + " miles away"
         this.rating = rating
     }
 
-    fun getImage(): Int{
+    fun getImage(): String{
         return image
     }
 

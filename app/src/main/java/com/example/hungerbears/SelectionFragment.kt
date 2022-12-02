@@ -2,7 +2,6 @@ package com.example.hungerbears
 
 import android.animation.Animator
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,7 @@ import android.view.ViewPropertyAnimator
 import android.view.animation.AccelerateInterpolator
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.example.hungerbears.databinding.FragmentSelectionBinding
@@ -21,7 +20,7 @@ class SelectionFragment : Fragment() {
     private var _binding:FragmentSelectionBinding? = null
     private val binding get() = _binding!!
 
-    // private val viewModel: SharedViewModel by activityViewModels()
+     private val viewModel: SharedViewModel by activityViewModels()
 
     private lateinit var manager: CardStackLayoutManager
 
@@ -41,22 +40,23 @@ class SelectionFragment : Fragment() {
     ): View {
         _binding = FragmentSelectionBinding.inflate(inflater, container, false)
         initAnimations()
-        val chipotle = Restaurant()
-        chipotle.setItem("Chipotle", R.drawable.chipotle, "10.1 Miles Away", 2.69f)
-        val mcdonalds = Restaurant()
-        mcdonalds.setItem("Mcdonalds", R.drawable.mcdonalds, "43.2 Miles Away", 1.2f)
-        val jollibee = Restaurant()
-        jollibee.setItem("Jollibee", R.drawable.jollibee, "1.5 Miles Away", 4.20f)
-        dummyList.add(chipotle)
-        dummyList.add(mcdonalds)
-        dummyList.add(jollibee)
-        dummyList.add(chipotle)
-        dummyList.add(mcdonalds)
-        dummyList.add(jollibee)
+
+//        val chipotle = Restaurant()
+//        chipotle.setItem("Chipotle", R.drawable.chipotle, "10.1 Miles Away", 2.69f)
+//        val mcdonalds = Restaurant()
+//        mcdonalds.setItem("Mcdonalds", R.drawable.mcdonalds, "43.2 Miles Away", 1.2f)
+//        val jollibee = Restaurant()
+//        jollibee.setItem("Jollibee", R.drawable.jollibee, "1.5 Miles Away", 4.20f)
+//        dummyList.add(chipotle)
+//        dummyList.add(mcdonalds)
+//        dummyList.add(jollibee)
+//        dummyList.add(chipotle)
+//        dummyList.add(mcdonalds)
+//        dummyList.add(jollibee)
         init()
         binding.cardStackView.layoutManager = manager
         binding.cardStackView.itemAnimator = DefaultItemAnimator()
-        binding.cardStackView.adapter = CardStackAdapter(requireContext(), dummyList,)
+        binding.cardStackView.adapter = CardStackAdapter(requireContext(), viewModel.getRestaurant(),)
 
         binding.yesButton.setOnClickListener {
             val setting = SwipeAnimationSetting.Builder()
@@ -164,6 +164,8 @@ class SelectionFragment : Fragment() {
                         duration = 1000
                         rotationXBy(360f)
                     }.start()
+                    viewModel.getVotes()[counter]++
+                    Toast.makeText(context, viewModel.getVotes()[counter].toString(), Toast.LENGTH_SHORT).show()
                 }
                 else if (direction == Direction.Top) {
                     binding.webButton.animate().apply {
@@ -173,7 +175,12 @@ class SelectionFragment : Fragment() {
                 }
 
                 if (++counter >= manager.itemCount) {
-                    findNavController().navigate(R.id.action_selectionFragment_to_loadingFragment)
+                    if (viewModel.finishedUsers()){
+                        findNavController().navigate(R.id.action_selectionFragment_to_loadingFragment)
+                    }
+                    else {
+                        findNavController().navigate(R.id.action_selectionFragment_to_bufferFragment)
+                    }
                 }
             }
 

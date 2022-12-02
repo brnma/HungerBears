@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_selectionFragment_to_loadingFragment"
             app:destination="@id/loadingFragment" />
+        <action
+            android:id="@+id/action_selectionFragment_to_bufferFragment"
+            app:destination="@id/bufferFragment" />
     </fragment>
     <fragment
         android:id="@+id/loadingFragment"
