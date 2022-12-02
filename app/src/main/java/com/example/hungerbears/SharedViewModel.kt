@@ -16,4 +16,8 @@ class SharedViewModel: ViewModel() {
     fun getRestaurant(): ArrayList<Restaurant> {
         return restaurantList
     }
+
+    fun addRestaurant(item: Restaurant){
+        restaurantList.add(item)
+    }
 }
