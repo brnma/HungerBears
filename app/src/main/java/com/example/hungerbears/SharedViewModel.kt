@@ -30,7 +30,7 @@ class SharedViewModel: ViewModel() {
     }
 
     fun getNumRestaurants(): Int{
-        return numUsers
+        return numRestaurant
     }
 
     fun setNumRestaurants(num: Int){
