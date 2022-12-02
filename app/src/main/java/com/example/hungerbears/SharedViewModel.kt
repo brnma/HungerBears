@@ -1,6 +1,7 @@
 package com.example.hungerbears
 
 import android.location.Location
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 
 class SharedViewModel: ViewModel() {
@@ -105,7 +106,17 @@ class SharedViewModel: ViewModel() {
 
     fun getMatch(): Restaurant{
         val max: Int = votes.maxOrNull() ?: 0
-        val matchIndex = votes.indexOf(max)
+
+        val values = ArrayList<Int>()
+
+        votes.forEachIndexed{index, element ->
+
+            if (element == max){
+                values.add(index)
+            }
+        }
+        val matchIndex = values.random()
+
 
         return restaurantList[matchIndex]
     }
