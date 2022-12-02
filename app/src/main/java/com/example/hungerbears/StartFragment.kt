@@ -31,12 +31,13 @@ class StartFragment : Fragment() {
 
         binding.startButton.setOnClickListener() {
             viewModel.setNumRestaurants(numberOfRestaurants)
-            viewModel.setNumUsers(numberOfUsers - 1)
+            viewModel.setNumUsers(numberOfUsers)
 
             // call google maps api to get restaurants
 //            GoogleMapsService(this.requireContext()).getRestaurants()
             getRestaurants()
 
+            viewModel.incrementUsersComp()
             //navigate to buffer screen
             findNavController().navigate(R.id.action_startFragment_to_bufferFragment)
         }
