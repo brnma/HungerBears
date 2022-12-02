@@ -15,6 +15,8 @@ class SharedViewModel: ViewModel() {
     private var userLat: Double = 0.0
     private var userLng: Double = 0.0
 
+    private var votes = Array<Int>(20){0}
+
     private var restaurantList = ArrayList<Restaurant>()
 
     fun setRestaurant(restList: ArrayList<Restaurant>){
@@ -95,5 +97,16 @@ class SharedViewModel: ViewModel() {
             incrementUsersComp()
             false
         }
+    }
+
+    fun getVotes(): Array<Int>{
+        return votes
+    }
+
+    fun getMatch(): Restaurant{
+        val max: Int = votes.maxOrNull() ?: 0
+        val matchIndex = votes.indexOf(max)
+
+        return restaurantList[matchIndex]
     }
 }
