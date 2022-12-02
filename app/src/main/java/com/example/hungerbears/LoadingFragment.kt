@@ -29,6 +29,8 @@ class LoadingFragment : Fragment() {
                 // do nothing
             }
             override fun onFinish() {
+
+
                 // navigate to the match fragment
                 findNavController().navigate(R.id.action_loadingFragment_to_matchFragment)
             }

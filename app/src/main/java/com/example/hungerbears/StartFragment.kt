@@ -31,6 +31,7 @@ class StartFragment : Fragment() {
 
         binding.startButton.setOnClickListener() {
             viewModel.setNumRestaurants(numberOfRestaurants)
+            viewModel.setNumUsers(numberOfUsers - 1)
 
             // call google maps api to get restaurants
 //            GoogleMapsService(this.requireContext()).getRestaurants()
@@ -105,8 +106,8 @@ class StartFragment : Fragment() {
                         "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoRef}&key=${API_KEY}"
                     //TODO: modify Restaurant class fields? (address OR lat/lng, photoUrl ...)
 
-                    viewModel.setLat(lat)
-                    viewModel.setLng(lng)
+//                    viewModel.setLat(lat)
+//                    viewModel.setLng(lng)
 
                     val distance = viewModel.getDistance()
                     val restaurantObj = Restaurant()

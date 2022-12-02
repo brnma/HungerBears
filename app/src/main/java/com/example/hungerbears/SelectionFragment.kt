@@ -173,7 +173,12 @@ class SelectionFragment : Fragment() {
                 }
 
                 if (++counter >= manager.itemCount) {
-                    findNavController().navigate(R.id.action_selectionFragment_to_loadingFragment)
+                    if (viewModel.finishedUsers()){
+                        findNavController().navigate(R.id.action_selectionFragment_to_loadingFragment)
+                    }
+                    else {
+                        findNavController().navigate(R.id.action_selectionFragment_to_bufferFragment)
+                    }
                 }
             }
 
