@@ -165,7 +165,6 @@ class SelectionFragment : Fragment() {
                         rotationXBy(360f)
                     }.start()
                     viewModel.getVotes()[counter]++
-                    Toast.makeText(context, viewModel.getVotes()[counter].toString(), Toast.LENGTH_SHORT).show()
                 }
                 else if (direction == Direction.Top) {
                     binding.webButton.animate().apply {
