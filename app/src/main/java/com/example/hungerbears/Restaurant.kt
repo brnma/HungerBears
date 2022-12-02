@@ -8,10 +8,10 @@ class Restaurant {
     private var rating: Float = 0f
 
 
-    fun setItem(name: String, image: String, dist: String, rating: Float){
+    fun setItem(name: String, image: String, dist: Float, rating: Float){
         this.name = name
         this.image = image
-        distanceAway = dist
+        distanceAway = String.format("%.2f", dist) + " miles away"
         this.rating = rating
     }
 

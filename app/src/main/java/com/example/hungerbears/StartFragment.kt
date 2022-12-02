@@ -5,14 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.example.hungerbears.databinding.FragmentSelectionBinding
 import com.example.hungerbears.databinding.FragmentStartBinding
 import org.json.JSONArray
 import org.json.JSONObject
@@ -20,15 +18,15 @@ import org.json.JSONObject
 class StartFragment : Fragment() {
     private var _binding: FragmentStartBinding? = null
     private val binding get() = _binding!!
-    private var numberOfUsers: Int = 1;
-    private var numberOfRestaurants: Int = 1;
+    private var numberOfUsers: Int = 1
+    private var numberOfRestaurants: Int = 1
 
     private val viewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentStartBinding.inflate(inflater, container, false)
 
         binding.startButton.setOnClickListener() {
@@ -103,12 +101,16 @@ class StartFragment : Fragment() {
                     val photoRef: String = restaurant.getJSONArray("photos").getJSONObject(0)
                         .getString("photo_reference")
                     // this needs testing -- response is html so might need to view header "location" for URL
-                    val photoUrl: String =
+                    val photoUrl =
                         "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoRef}&key=${API_KEY}"
                     //TODO: modify Restaurant class fields? (address OR lat/lng, photoUrl ...)
 
-                    val restaurantObj: Restaurant = Restaurant()
-                    restaurantObj.setItem(name, photoUrl, "123", rating.toFloat())
+                    viewModel.setLat(lat)
+                    viewModel.setLng(lng)
+
+                    val distance = viewModel.getDistance()
+                    val restaurantObj = Restaurant()
+                    restaurantObj.setItem(name, photoUrl, distance, rating.toFloat())
                     //TODO: add restaurantObj to list in ViewModel
                     viewModel.addRestaurant(restaurantObj)
                 }
