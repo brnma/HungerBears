@@ -116,4 +116,15 @@ class SharedViewModel: ViewModel() {
         }
 
     }
+
+    fun resetValues(){
+        numUsers = 0
+        usersComp = 0
+        numRestaurant = 0
+        userLat = 0.0
+        userLng = 0.0
+        radius = ""
+        votes  = Array<Int>(20){0}
+        restaurantList.clear()
+    }
 }

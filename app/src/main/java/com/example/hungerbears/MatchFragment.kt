@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.hungerbears.databinding.FragmentMatchBinding
 import com.example.hungerbears.databinding.FragmentSelectionBinding
@@ -47,6 +48,11 @@ class MatchFragment : Fragment() {
             val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
             mapIntent.setPackage("com.google.android.apps.maps")
             startActivity(mapIntent)
+        }
+
+        binding.startOver.setOnClickListener{
+            viewModel.resetValues()
+            findNavController().navigate(R.id.action_matchFragment_to_startFragment)
         }
         return binding.root
     }
