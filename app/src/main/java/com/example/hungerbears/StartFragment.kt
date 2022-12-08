@@ -2,13 +2,11 @@ package com.example.hungerbears
 
 import android.annotation.SuppressLint
 import android.location.Location
-import android.media.Image
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -118,7 +116,7 @@ class StartFragment : Fragment() {
     //    private val API_KEY = "TEMP"
     private val API_KEY = "AIzaSyASOVUElVvEKOaRxZpUWhX8pDySvM3n8DE"
 
-    fun getRestaurants(){
+    private fun getRestaurants(){
         // Instantiate the RequestQueue
         val queue = Volley.newRequestQueue(context)
         val url =
