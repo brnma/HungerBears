@@ -1,8 +1,6 @@
 package com.example.hungerbears
 
 import android.location.Location
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 
 class SharedViewModel: ViewModel() {
@@ -10,9 +8,6 @@ class SharedViewModel: ViewModel() {
     private var numUsers: Int = 0
     private var usersComp: Int = 0
     private var numRestaurant: Int = 0
-
-    private var restLat: Double = 0.0
-    private var restLng: Double = 0.0
 
     private var userLat: Double = 0.0
     private var userLng: Double = 0.0
@@ -59,13 +54,6 @@ class SharedViewModel: ViewModel() {
         return numUsers
     }
 
-    fun setRestLat(lat: Double){
-        restLat = lat
-    }
-
-    fun setRestLng(lng: Double){
-        restLng = lng
-    }
 
     fun setUserLat(lat: Double){
         userLat = lat
@@ -87,22 +75,6 @@ class SharedViewModel: ViewModel() {
         usersComp++
     }
 
-    fun getDistance(): Float {
-        // calculate distance
-        //TODO: update user lat and lng to not be hardcoded
-        val userLocation = Location("User Location")
-//                    userLocation.setLatitude(userlat)
-//                    userLocation.setLongitude(userlng)
-//        userLocation.latitude = 37.229572
-//        userLocation.longitude = -80.413940
-        userLocation.latitude = userLat
-        userLocation.longitude = userLng
-        val restaurantLocation = Location("Restaurant Location")
-        restaurantLocation.latitude = restLat
-        restaurantLocation.longitude = restLng
-
-        return (userLocation.distanceTo(restaurantLocation)) / 1609.344f
-    }
 
     fun finishedUsers(): Boolean{
         return if (usersComp == numUsers) {
@@ -119,18 +91,29 @@ class SharedViewModel: ViewModel() {
 
     fun getMatch(): Restaurant{
         val max: Int = votes.maxOrNull() ?: 0
+        val loc = Location("dummyprovider")
 
-        val values = ArrayList<Int>()
+        if (max == 0) {
+            val noMatch = Restaurant()
+            noMatch.setItem("No Match",
+                "", 0.toFloat(), loc, loc)
 
-
-        for ((index, element) in votes.withIndex()) {
-            if (element == max){
-                values.add(index)
-                println("added $index to array list")
-            }
+            return noMatch
         }
-        val matchIndex = values.shuffled()[0]
+        else {
+            val values = ArrayList<Int>()
 
-        return restaurantList[matchIndex]
+
+            for ((index, element) in votes.withIndex()) {
+                if (element == max){
+                    values.add(index)
+                    println("added $index to array list")
+                }
+            }
+            val matchIndex = values.shuffled()[0]
+
+            return restaurantList[matchIndex]
+        }
+
     }
 }

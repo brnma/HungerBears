@@ -27,8 +27,20 @@ class MatchFragment : Fragment() {
 
         _binding = FragmentMatchBinding.inflate(inflater, container, false)
         val matchedRestaurant = viewModel.getMatch()
-        binding.matchText.text = matchedRestaurant.getName()
-        context?.let { Glide.with(it).load(matchedRestaurant.getImage()).fitCenter().into(binding.matchImage) }
+
+        if(matchedRestaurant.getName() == "No Match"){
+            binding.matchTextConstant.text = ""
+            binding.matchText.text = "Could Not Find A Match"
+            binding.directionsButton.isEnabled = false
+            binding.directionsButton.alpha = 0.3f
+
+            context?.let { Glide.with(it).load(R.drawable.sad).fitCenter().into(binding.matchImage) }
+        }
+        else {
+            binding.matchText.text = matchedRestaurant.getName()
+            context?.let { Glide.with(it).load(matchedRestaurant.getImage()).fitCenter().into(binding.matchImage) }
+        }
+
         binding.directionsButton.setOnClickListener {
             val gmmIntentUri =
                 Uri.parse("google.navigation:q=" + matchedRestaurant.getLocation().latitude + "," + matchedRestaurant.getLocation().longitude)
