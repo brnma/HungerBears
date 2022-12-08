@@ -2,11 +2,13 @@ package com.example.hungerbears
 
 import android.annotation.SuppressLint
 import android.location.Location
+import android.media.Image
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -57,18 +59,26 @@ class StartFragment : Fragment() {
                 Toast.makeText(context, "Failed to get location", Toast.LENGTH_SHORT).show()
             }
 
-        binding.startButton.setOnClickListener() {
-            viewModel.setNumRestaurants(numberOfRestaurants)
-            viewModel.setNumUsers(numberOfUsers)
-            viewModel.setRadius((binding.searchDistanceNum.text.toString().toFloat() * 1609.34).toString())
-            println(viewModel.getRadius())
-            // call google maps api to get restaurants
-//            GoogleMapsService(this.requireContext()).getRestaurants()
-            getRestaurants()
 
-            viewModel.incrementUsersComp()
-            //navigate to buffer screen
-            findNavController().navigate(R.id.action_startFragment_to_bufferFragment)
+        binding.startButton.setOnClickListener() {
+
+            if (binding.searchDistanceNum.text.toString() == "") {
+                val toast = Toast.makeText(context, "Please enter a search distance", Toast.LENGTH_SHORT)
+                toast.show()
+            }
+            else {
+                viewModel.setNumRestaurants(numberOfRestaurants)
+                viewModel.setNumUsers(numberOfUsers)
+                viewModel.setRadius((binding.searchDistanceNum.text.toString().toFloat() * 1609.34).toString())
+                println(viewModel.getRadius())
+                // call google maps api to get restaurants
+//            GoogleMapsService(this.requireContext()).getRestaurants()
+                getRestaurants()
+
+                viewModel.incrementUsersComp()
+                //navigate to buffer screen
+                findNavController().navigate(R.id.action_startFragment_to_bufferFragment)
+            }
         }
 
         binding.minusButton1.setOnClickListener() {
