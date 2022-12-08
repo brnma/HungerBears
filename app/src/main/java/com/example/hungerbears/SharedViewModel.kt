@@ -31,6 +31,7 @@ class SharedViewModel: ViewModel() {
     }
 
     fun getRestaurant(): ArrayList<Restaurant> {
+        restaurantList.shuffle()
         return restaurantList
     }
 
