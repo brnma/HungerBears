@@ -1,5 +1,7 @@
 package com.example.hungerbears
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -27,6 +29,13 @@ class MatchFragment : Fragment() {
         val matchedRestaurant = viewModel.getMatch()
         binding.matchText.text = matchedRestaurant.getName()
         context?.let { Glide.with(it).load(matchedRestaurant.getImage()).fitCenter().into(binding.matchImage) }
+        binding.directionsButton.setOnClickListener {
+            val gmmIntentUri =
+                Uri.parse("google.navigation:q=" + matchedRestaurant.getLocation().latitude + "," + matchedRestaurant.getLocation().longitude)
+            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+            mapIntent.setPackage("com.google.android.apps.maps")
+            startActivity(mapIntent)
+        }
         return binding.root
     }
 
