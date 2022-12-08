@@ -41,4 +41,8 @@ class Restaurant {
     fun calcDistance() {
         distanceAway =  (String.format("%.2f",(userLocation.distanceTo(restLocation)) / 1609.344f))
     }
+
+    fun getLocation(): Location {
+        return restLocation
+    }
 }
