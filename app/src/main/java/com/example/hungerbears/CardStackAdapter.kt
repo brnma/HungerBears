@@ -19,7 +19,7 @@ class CardStackAdapter(val context: Context, val list: ArrayList<Restaurant>): R
 
     override fun onBindViewHolder(holder: CardStackViewHolder, position: Int) {
         holder.binding.itemName.text = list[position].getName()
-        holder.binding.itemDistance.text = list[position].getDistanceAway()
+        holder.binding.itemDistance.text = list[position].getDistanceAway() + " miles away"
         holder.binding.itemRating.rating = list[position].getRating()
 
         val imageURL = list[position].getImage()

@@ -17,12 +17,22 @@ class SharedViewModel: ViewModel() {
     private var userLat: Double = 0.0
     private var userLng: Double = 0.0
 
+    private var radius: String = ""
+
     private var votes = Array<Int>(20){0}
 
     private var restaurantList = ArrayList<Restaurant>()
 
     fun setRestaurant(restList: ArrayList<Restaurant>){
         restaurantList = restList
+    }
+
+    fun getRadius():String{
+        return radius
+    }
+
+    fun setRadius(num: String){
+        radius = num
     }
 
     fun getRestaurant(): ArrayList<Restaurant> {
@@ -83,8 +93,10 @@ class SharedViewModel: ViewModel() {
         val userLocation = Location("User Location")
 //                    userLocation.setLatitude(userlat)
 //                    userLocation.setLongitude(userlng)
-        userLocation.latitude = 37.229572
-        userLocation.longitude = -80.413940
+//        userLocation.latitude = 37.229572
+//        userLocation.longitude = -80.413940
+        userLocation.latitude = userLat
+        userLocation.longitude = userLng
         val restaurantLocation = Location("Restaurant Location")
         restaurantLocation.latitude = restLat
         restaurantLocation.longitude = restLng
