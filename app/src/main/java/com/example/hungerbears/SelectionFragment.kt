@@ -68,13 +68,13 @@ class SelectionFragment : Fragment() {
             binding.cardStackView.swipe()
         }
 
-        binding.webButton.setOnClickListener{
-            Toast.makeText(this.context, "TODO: Opens up a webpage", Toast.LENGTH_SHORT).show()
-            binding.webButton.animate().apply {
-                duration = 1000
-                rotationBy(-360f)
-            }.start()
-        }
+//        binding.webButton.setOnClickListener{
+//            Toast.makeText(this.context, "TODO: Opens up a webpage", Toast.LENGTH_SHORT).show()
+//            binding.webButton.animate().apply {
+//                duration = 1000
+//                rotationBy(-360f)
+//            }.start()
+//        }
 
         binding.noButton.setOnClickListener {
             val setting = SwipeAnimationSetting.Builder()
@@ -102,7 +102,7 @@ class SelectionFragment : Fragment() {
 
             override fun onAnimationEnd(animation: Animator?) {
                 binding.noButton.rotationX = 0f
-                binding.webButton.rotation = 0f
+//                binding.webButton.rotation = 0f
                 binding.yesButton.rotationX = 0f
             }
         })
@@ -121,27 +121,27 @@ class SelectionFragment : Fragment() {
 
             override fun onAnimationEnd(animation: Animator?) {
                 binding.noButton.rotationX = 0f
-                binding.webButton.rotation = 0f
+//                binding.webButton.rotation = 0f
                 binding.yesButton.rotationX = 0f
             }
         })
 
-        animWebSpin =binding.webButton.animate().apply {
-            duration = 1000
-            rotationBy(-360f) }
-        animWebSpin.setListener(object : Animator.AnimatorListener {
-            override fun onAnimationRepeat(animation: Animator?) {
-            }
-            override fun onAnimationCancel(animation: Animator?) {
-            }
-            override fun onAnimationStart(animation: Animator?) {}
-
-            override fun onAnimationEnd(animation: Animator?) {
-                binding.noButton.rotationX = 0f
-                binding.webButton.rotation = 0f
-                binding.yesButton.rotationX = 0f
-            }
-        })
+//        animWebSpin =binding.webButton.animate().apply {
+//            duration = 1000
+//            rotationBy(-360f) }
+//        animWebSpin.setListener(object : Animator.AnimatorListener {
+//            override fun onAnimationRepeat(animation: Animator?) {
+//            }
+//            override fun onAnimationCancel(animation: Animator?) {
+//            }
+//            override fun onAnimationStart(animation: Animator?) {}
+//
+//            override fun onAnimationEnd(animation: Animator?) {
+//                binding.noButton.rotationX = 0f
+////                binding.webButton.rotation = 0f
+//                binding.yesButton.rotationX = 0f
+//            }
+//        })
     }
 
     private fun init() {
@@ -165,10 +165,10 @@ class SelectionFragment : Fragment() {
                     viewModel.getVotes()[counter]++
                 }
                 else if (direction == Direction.Top) {
-                    binding.webButton.animate().apply {
-                        duration = 1000
-                        rotationBy(-360f)
-                    }.start()
+//                    binding.webButton.animate().apply {
+//                        duration = 1000
+//                        rotationBy(-360f)
+//                    }.start()
                 }
 
                 if (++counter >= manager.itemCount) {
