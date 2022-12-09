@@ -79,7 +79,7 @@ class StartFragment : Fragment() {
                 viewModel.incrementUsersComp()
 
                 // create a timer for 2 seconds
-                val timer = object : CountDownTimer(2000, 1000) {
+                val timer = object : CountDownTimer(1000, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
                         // do nothing
                     }
