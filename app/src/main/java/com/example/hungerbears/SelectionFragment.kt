@@ -53,11 +53,11 @@ class SelectionFragment : Fragment() {
 //        dummyList.add(chipotle)
 //        dummyList.add(mcdonalds)
 //        dummyList.add(jollibee)
+
         init()
         binding.cardStackView.layoutManager = manager
         binding.cardStackView.itemAnimator = DefaultItemAnimator()
         binding.cardStackView.adapter = CardStackAdapter(requireContext(), viewModel.getRestaurant(),)
-
         binding.yesButton.setOnClickListener {
             val setting = SwipeAnimationSetting.Builder()
                 .setDirection(Direction.Right)
@@ -74,7 +74,6 @@ class SelectionFragment : Fragment() {
                 duration = 1000
                 rotationBy(-360f)
             }.start()
-
         }
 
         binding.noButton.setOnClickListener {
@@ -86,7 +85,6 @@ class SelectionFragment : Fragment() {
             manager.setSwipeAnimationSetting(setting)
             binding.cardStackView.swipe()
         }
-
         return binding.root
     }
 

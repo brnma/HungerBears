@@ -3,6 +3,7 @@ package com.example.hungerbears
 import android.annotation.SuppressLint
 import android.location.Location
 import android.os.Bundle
+import android.os.CountDownTimer
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import org.json.JSONArray
 import org.json.JSONObject
+import java.lang.Integer.min
 
 class StartFragment : Fragment() {
     private var _binding: FragmentStartBinding? = null
@@ -35,6 +37,7 @@ class StartFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        viewModel.resetValues()
         _binding = FragmentStartBinding.inflate(inflater, container, false)
 
         //Create a location client
@@ -65,6 +68,8 @@ class StartFragment : Fragment() {
                 toast.show()
             }
             else {
+                binding.startButton.isEnabled = false
+                binding.startButton.alpha = 0.5f
                 viewModel.setNumRestaurants(numberOfRestaurants)
                 viewModel.setNumUsers(numberOfUsers)
                 viewModel.setRadius((binding.searchDistanceNum.text.toString().toFloat() * 1609.34).toString())
@@ -72,10 +77,19 @@ class StartFragment : Fragment() {
                 // call google maps api to get restaurants
 //            GoogleMapsService(this.requireContext()).getRestaurants()
                 getRestaurants()
-
                 viewModel.incrementUsersComp()
-                //navigate to buffer screen
-                findNavController().navigate(R.id.action_startFragment_to_bufferFragment)
+
+                // create a timer for 2 seconds
+                val timer = object : CountDownTimer(1000, 1000) {
+                    override fun onTick(millisUntilFinished: Long) {
+                        // do nothing
+                    }
+                    override fun onFinish() {
+                        //navigate to buffer screen
+                        findNavController().navigate(R.id.action_startFragment_to_bufferFragment)
+                    }
+                }
+                timer.start()
             }
         }
 
@@ -129,6 +143,8 @@ class StartFragment : Fragment() {
             Request.Method.GET, url, null,
             { res ->
                 val results: JSONArray = res.getJSONArray("results")
+                val actualNumRestaurantsAPI: Int = min(results.length(), viewModel.getNumRestaurants())
+                viewModel.setNumRestaurants(actualNumRestaurantsAPI)
                 for (i in 0..viewModel.getNumRestaurants() - 1) {
                     val restaurant: JSONObject = results.getJSONObject(i)
                     val name: String = restaurant.getString("name")
