@@ -37,6 +37,7 @@ class StartFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        viewModel.resetValues()
         _binding = FragmentStartBinding.inflate(inflater, container, false)
 
         //Create a location client
