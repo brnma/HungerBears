@@ -7,20 +7,20 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.hungerbears.databinding.FragmentMatchBinding
-import com.example.hungerbears.databinding.FragmentSelectionBinding
-import java.lang.Math.sqrt
 import java.util.*
 
 
@@ -103,6 +103,20 @@ class MatchFragment : Fragment() {
             // Display a Toast message if
             // acceleration value is over 12
             if (acceleration > 20) {
+                val v = context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator?
+                // Vibrate for 300 milliseconds
+                // Vibrate for 300 milliseconds
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    v!!.vibrate(
+                        VibrationEffect.createOneShot(
+                            300,
+                            VibrationEffect.DEFAULT_AMPLITUDE
+                        )
+                    )
+                } else {
+                    //deprecated in API 26
+                    v!!.vibrate(500)
+                }
                 Toast.makeText(context, "Random Match!", Toast.LENGTH_SHORT).show()
                 findNavController().navigate(R.id.action_matchFragment_self)
             }
