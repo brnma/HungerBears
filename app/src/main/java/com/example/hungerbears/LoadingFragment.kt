@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 
@@ -29,7 +30,6 @@ class LoadingFragment : Fragment() {
                 // do nothing
             }
             override fun onFinish() {
-
                 // navigate to the match fragment
                 findNavController().navigate(R.id.action_loadingFragment_to_matchFragment)
             }
