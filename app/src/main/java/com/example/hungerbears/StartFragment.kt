@@ -67,6 +67,8 @@ class StartFragment : Fragment() {
                 toast.show()
             }
             else {
+                binding.startButton.isEnabled = false
+                binding.startButton.alpha = 0.5f
                 viewModel.setNumRestaurants(numberOfRestaurants)
                 viewModel.setNumUsers(numberOfUsers)
                 viewModel.setRadius((binding.searchDistanceNum.text.toString().toFloat() * 1609.34).toString())
